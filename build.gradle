@@ -1,0 +1,37 @@
+buildscript {
+  repositories {
+    // 阿里云 central
+    maven { url 'https://maven.aliyun.com/repository/central/' }
+    // 阿里云 jcenter
+    maven { url 'https://maven.aliyun.com/repository/jcenter/' }
+    // 阿里云 google
+    maven { url 'https://maven.aliyun.com/repository/google/' }
+
+    mavenCentral()
+    jcenter()
+    google()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.4.2'
+  }
+}
+
+allprojects {
+  repositories {
+    // 阿里云 central
+    maven { url 'https://maven.aliyun.com/repository/central/' }
+    // 阿里云 jcenter
+    maven { url 'https://maven.aliyun.com/repository/jcenter/' }
+    // 阿里云 google
+    maven { url 'https://maven.aliyun.com/repository/google/' }
+
+    mavenCentral()
+    jcenter()
+    google()
+  }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}
+

@@ -23,6 +23,8 @@ import com.chengtao.pianoview.view.PianoView;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+
 /*
  * 钢琴示例主界面
  *
@@ -30,17 +32,13 @@ import java.util.ArrayList;
  */
 @SuppressWarnings("FieldCanBeLocal")
 public final class MainActivity extends Activity
-    implements OnPianoListener, OnLoadAudioListener, SeekBar.OnSeekBarChangeListener,
+    implements OnPianoListener, OnLoadAudioListener,
     View.OnClickListener, OnPianoAutoPlayListener {
   //flight_of_the_bumble_bee,simple_little_star_config
   private static final String CONFIG_FILE_NAME = "simple_little_star_config";
   private static final boolean USE_CONFIG_FILE = true;
   private PianoView pianoView;
-  private SeekBar seekBar;
-  private Button leftArrow;
-  private Button rightArrow;
   private Button btnMusic;
-  private int scrollProgress = 0;
   private final static float SEEKBAR_OFFSET_SIZE = -12;
   //
   private boolean isPlay = false;
@@ -57,18 +55,11 @@ public final class MainActivity extends Activity
     //view
     pianoView = findViewById(R.id.pv);
     pianoView.setSoundPollMaxStream(10);
-    seekBar = findViewById(R.id.sb);
-    seekBar.setThumbOffset((int) convertDpToPixel(SEEKBAR_OFFSET_SIZE));
-    leftArrow = findViewById(R.id.iv_left_arrow);
-    rightArrow = findViewById(R.id.iv_right_arrow);
     btnMusic = findViewById(R.id.iv_music);
     //listener
     pianoView.setPianoListener(this);
     pianoView.setAutoPlayListener(this);
     pianoView.setLoadAudioListener(this);
-    seekBar.setOnSeekBarChangeListener(this);
-    rightArrow.setOnClickListener(this);
-    leftArrow.setOnClickListener(this);
     btnMusic.setOnClickListener(this);
     //init
     if (USE_CONFIG_FILE) {
@@ -182,6 +173,7 @@ public final class MainActivity extends Activity
   @Override
   public void onPianoClick(boolean isBlackKey, PianoKeyVoice voice, int group,
       int positionOfGroup) {
+    Toast.makeText(getApplicationContext(), "Click "+ isBlackKey + " "+voice +" " + group, Toast.LENGTH_SHORT).show();
   }
 
   @Override public void loadPianoAudioStart() {
@@ -200,65 +192,19 @@ public final class MainActivity extends Activity
     Log.e("TAG", "progress:" + progress);
   }
 
-  @Override public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-    pianoView.scroll(i);
-  }
-
-  @Override public void onStartTrackingTouch(SeekBar seekBar) {
-
-  }
-
-  @Override public void onStopTrackingTouch(SeekBar seekBar) {
-
-  }
-
   @Override protected void onResume() {
     /**
      * 设置为横屏
      */
-    if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    if (getRequestedOrientation() != SCREEN_ORIENTATION_LANDSCAPE) {
+      setRequestedOrientation(SCREEN_ORIENTATION_LANDSCAPE);
     }
     super.onResume();
   }
 
   @Override public void onClick(View view) {
-    if (scrollProgress == 0) {
-      try {
-        scrollProgress = (pianoView.getLayoutWidth() * 100) / pianoView.getPianoWidth();
-      } catch (Exception e) {
-
-      }
-    }
-    int progress;
-    switch (view.getId()) {
-      case R.id.iv_left_arrow:
-        if (scrollProgress == 0) {
-          progress = 0;
-        } else {
-          progress = seekBar.getProgress() - scrollProgress;
-          if (progress < 0) {
-            progress = 0;
-          }
-        }
-        seekBar.setProgress(progress);
-        break;
-      case R.id.iv_right_arrow:
-        if (scrollProgress == 0) {
-          progress = 100;
-        } else {
-          progress = seekBar.getProgress() + scrollProgress;
-          if (progress > 100) {
-            progress = 100;
-          }
-        }
-        seekBar.setProgress(progress);
-        break;
-      case R.id.iv_music:
-        if (!isPlay) {
-          pianoView.autoPlay(litterStarList);
-        }
-        break;
+    if (!isPlay) {
+      pianoView.autoPlay(litterStarList);
     }
   }
 

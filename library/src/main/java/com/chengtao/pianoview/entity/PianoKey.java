@@ -16,7 +16,7 @@ public final class PianoKey {
   //<editor-fold desc="属性">
   // 是否为黑键
   private boolean mIsBlackKey;
-  // 钢琴键的声音 [ DO, RE, MI, FA, SO, LA, SI ]
+  //[ DO, RE, MI, FA, SO, LA, SI ]
   private PianoKeyVoice mPianoKeyVoice;
   // 所属组
   @IntRange(from = 0)

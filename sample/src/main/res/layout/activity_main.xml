@@ -1,30 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background"
-    >
+    android:background="#19A82C"
+    android:orientation="vertical">
 
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="right"
-      android:orientation="horizontal"
-      android:padding="10dp">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="40"
+        android:gravity="center|bottom"
+        android:text="Музыкальное приключение:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp"
+        android:typeface="serif" />
 
-    <Button
-        android:id="@+id/iv_music"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/music" />
-  </LinearLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="5"
+        android:gravity="center"
+        android:text="Найти Пинни"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:typeface="monospace" />
 
-  <com.chengtao.pianoview.view.PianoView
-      android:id="@+id/pv"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-  </com.chengtao.pianoview.view.PianoView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="50"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:paddingBottom="70dp">
+
+        <Button
+            android:id="@+id/buttoNewGame"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="145dp"
+            android:onClick="newGame"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/buttonshape"
+            android:text="НОВАЯ ИГРА" />
+
+        <Button
+            android:id="@+id/buttonContinueGame"
+            style="?android:attr/buttonStyleSmall"
+            android:onClick="continueGame"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:background="@drawable/buttonshape"
+            android:text="ПРОДОЛЖИТЬ" />
+
+
+    </LinearLayout>
+
 </LinearLayout>

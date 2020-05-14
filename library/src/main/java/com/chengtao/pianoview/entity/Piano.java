@@ -16,7 +16,7 @@ import java.util.List;
 public final class Piano {
   //<editor-fold desc="常量">
   // 钢琴键数目
-  public static final int PIANO_COUNT = 24;
+  public static final int PIANO_COUNT = 25;
   //</editor-fold>
 
   //<editor-fold desc="属性">
@@ -37,7 +37,7 @@ public final class Piano {
   // 白键高度
   private int mWhiteKeyHeight;
   // 钢琴总宽度
-  private int mPianoWith = 0;
+  private int mPianoWith = 100;
   // 钢琴图标缩放比例
   private float mScale;
   // 上下文
@@ -379,6 +379,5 @@ public final class Piano {
   private int getVoiceFromResources(String voiceName) {
     return mContext.getResources().getIdentifier(voiceName, "raw", mContext.getPackageName());
   }
-
   //</editor-fold>
 }

@@ -16,6 +16,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+
 import com.chengtao.pianoview.R;
 import com.chengtao.pianoview.entity.AutoPlayEntity;
 import com.chengtao.pianoview.entity.Piano;
@@ -115,9 +117,15 @@ public final class PianoView extends View {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     int width = getMeasuredWidth();
     int height = getMeasuredHeight();
-    mPiano.initPiano((int)(height * 0.62));
+    DisplayMetrics metrics = new DisplayMetrics();
+    WindowManager windowManager = (WindowManager) context
+            .getSystemService(Context.WINDOW_SERVICE);
+    windowManager.getDefaultDisplay().getMetrics(metrics);
+    int wid = metrics.widthPixels;
+    int hei = metrics.heightPixels;
+    mPiano.initPiano((int)(height*width/1000*0.36));
     Log.w("TAG", "piano width : " + mPiano.getPianoWith());
-    setMeasuredDimension(mPiano.getPianoWith() > width ? mPiano.getPianoWith() : width, height);
+    setMeasuredDimension(wid, hei);
   }
 
   @Override

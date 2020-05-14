@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#19A82C"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textPreGame"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="80"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp"
+        android:typeface="serif" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="15"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
+
+        <Button
+            android:id="@+id/buttonContinueGame"
+            style="?android:attr/buttonStyleSmall"
+            android:onClick="startGame"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:background="@drawable/buttonshape"
+            android:text="К ЗАДАНИЮ" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

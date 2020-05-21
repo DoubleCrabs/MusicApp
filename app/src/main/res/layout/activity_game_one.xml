@@ -1,9 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameOneActivity">
+    android:background="@color/background"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp"
+        android:typeface="serif" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="30"
+        android:gravity="center_vertical"
+        android:layout_marginTop="24dp">
+
+        <RadioButton
+            android:id="@+id/answer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/activity_text_size_test"
+            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="Нормальный" />
+
+        <RadioButton
+            android:id="@+id/answer2"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/activity_text_size_test"
+            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content"
+            android:text="Сложный      " />
+
+        <RadioButton
+            android:id="@+id/answer3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"            android:textSize="@dimen/activity_text_size_test"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:text="Нормальный" />
+
+        <RadioButton
+            android:id="@+id/answer4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/activity_text_size_test"
+            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:text="Нормальный" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="15"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
+
+        <Button
+            android:id="@+id/buttonSubmit"
+            style="?android:attr/buttonStyleSmall"
+            android:onClick="checkAnswer"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_horizontal|center"
+            android:background="@drawable/buttonshape"
+            android:text="Ответить" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

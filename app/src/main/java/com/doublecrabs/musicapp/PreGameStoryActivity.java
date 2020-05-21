@@ -38,14 +38,16 @@ public class PreGameStoryActivity extends AppCompatActivity {
     public void startGame(View view){
         sPref = getSharedPreferences("SaveData", MODE_PRIVATE);
         String mCurrentGame = sPref.getString(CURRENT_GAME, "");
+
         Intent intent = new Intent();
         switch (mCurrentGame){
             case "1":
-                intent = new Intent(PreGameStoryActivity.this, GameOneActivity.class);
+                intent = new Intent(this, GameOneActivity.class);
                 break;
             case "2":
                 break;
         }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

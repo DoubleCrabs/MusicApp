@@ -4,28 +4,14 @@ import androidx.annotation.IntRange;
 
 import com.google.gson.annotations.SerializedName;
 
-/*
- * 自动播放模型
- *
- * @author ChengTao <a href="mailto:tao@paradisehell.org">Contact me.</a>
- */
 
 public final class AutoPlayEntity {
 
-  //<editor-fold desc="属性">
-
-  // 是否为黑键
   private boolean mIsBlackKey;
-  // 组数, 从0开始
   private int mGroup;
-  // 位置, 从0开始
   private int mPosition;
-  // 当前按键与之后按键的间隔时间
   @SerializedName("break")
   private long mCurrentBreakTime;
-  //</editor-fold>
-
-  //<editor-fold desc="构造函数">
 
   public AutoPlayEntity() {
   }
@@ -40,9 +26,6 @@ public final class AutoPlayEntity {
     mPosition = position;
     mCurrentBreakTime = currentBreakTime;
   }
-  //</editor-fold>
-
-  //<editor-fold desc="Setter">
 
   public void setIsBlackKey(boolean isBlackKey) {
     mIsBlackKey = isBlackKey;
@@ -59,9 +42,6 @@ public final class AutoPlayEntity {
   public void setCurrentBreakTime(long currentBreakTime) {
     mCurrentBreakTime = currentBreakTime;
   }
-  //</editor-fold>
-
-  //<editor-fold desc="Getter">
 
   public boolean isBlackKey() {
     return mIsBlackKey;
@@ -78,5 +58,4 @@ public final class AutoPlayEntity {
   public long getCurrentBreakTime() {
     return mCurrentBreakTime;
   }
-  //</editor-fold>
 }

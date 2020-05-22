@@ -42,7 +42,7 @@ public class PreGameStoryActivity extends AppCompatActivity {
         Intent intent = new Intent();
         switch (mCurrentGame){
             case "1":
-                intent = new Intent(this, GameOneActivity.class);
+                intent = new Intent(this, GameTestActivity.class);
                 break;
             case "2":
                 break;

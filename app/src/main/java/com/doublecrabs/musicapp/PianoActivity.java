@@ -25,16 +25,11 @@ import java.util.ArrayList;
 
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 
-/*
- * 钢琴示例主界面
- *
- * @author ChengTao <a href="mailto:tao@paradisehell.org">Contact me.</a>
- */
 @SuppressWarnings("FieldCanBeLocal")
 public final class PianoActivity extends Activity
     implements OnPianoListener, OnLoadAudioListener,
     View.OnClickListener, OnPianoAutoPlayListener {
-  //flight_of_the_bumble_bee,simple_little_star_config
+
   private static final String CONFIG_FILE_NAME = "simple_little_star_config";
   private static final boolean USE_CONFIG_FILE = true;
   private PianoView pianoView;
@@ -100,9 +95,7 @@ public final class PianoActivity extends Activity
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
   }
 
-  /**
-   * 初始化小星星列表
-   */
+
   private void initLitterStarList() {
     litterStarList = new ArrayList<>();
     litterStarList.add(
@@ -224,9 +217,7 @@ public final class PianoActivity extends Activity
 
   @Override
   protected void onResume() {
-    /**
-     * 设置为横屏
-     */
+
     if (getRequestedOrientation() != SCREEN_ORIENTATION_LANDSCAPE) {
       setRequestedOrientation(SCREEN_ORIENTATION_LANDSCAPE);
     }
@@ -242,9 +233,6 @@ public final class PianoActivity extends Activity
 
   /**
    * Dp to px
-   *
-   * @param dp dp值
-   * @return px 值
    */
   private float convertDpToPixel(float dp) {
     Resources resources = this.getResources();

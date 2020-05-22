@@ -5,40 +5,22 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 
-/*
- * 钢琴键模型
- *
- * @author ChengTao <a href="mailto:tao@paradisehell.org">Contact me.</a>
- */
 
 public final class PianoKey {
 
-  //<editor-fold desc="属性">
-  // 是否为黑键
   private boolean mIsBlackKey;
   //[ DO, RE, MI, FA, SO, LA, SI ]
   private PianoKeyVoice mPianoKeyVoice;
-  // 所属组
   @IntRange(from = 0)
   private int mGroup;
-  // 所属组下的位置, 从 0 开始
   @IntRange(from = 0)
   private int mPositionOfGroup;
-  // 图标
   private Drawable mKeyDrawable;
-  // 音乐 id
   private int mVoiceId;
-  // 标志，是否被点击，默认未点击
   private boolean mIsPressed;
-  // 钢琴键的所占区域
   private Rect[] mAreaOfKey;
-  // 音名（针对白键）
   private String mLetterName;
-  // 被点击的手指的 id
   private int mFingerId = -1;
-  //</editor-fold>
-
-  //<editor-fold desc="Setter">
 
   public void setIsBlackKey(boolean isBlackKey) {
     mIsBlackKey = isBlackKey;
@@ -80,9 +62,6 @@ public final class PianoKey {
     mFingerId = fingerId;
   }
 
-  //</editor-fold>
-
-  //<editor-fold desc="Getter">
 
   public boolean isBlackKey() {
     return mIsBlackKey;
@@ -138,24 +117,10 @@ public final class PianoKey {
     return mFingerId;
   }
 
-  //</editor-fold>
-
-  //<editor-fold desc="公开方法">
-
-  /**
-   * 重置手指 id
-   */
   public void resetFingerId() {
     mFingerId = -1;
   }
 
-  /**
-   * 判断 x, y 坐标是否在钢琴键的点击区域内
-   *
-   * @param x x坐标
-   * @param y y坐标
-   * @return 是否在点击区域内
-   */
   public boolean contain(int x, int y) {
     for (Rect rect : mAreaOfKey) {
       if (rect.contains(x, y)) {
@@ -164,5 +129,4 @@ public final class PianoKey {
     }
     return false;
   }
-  //</editor-fold>
 }

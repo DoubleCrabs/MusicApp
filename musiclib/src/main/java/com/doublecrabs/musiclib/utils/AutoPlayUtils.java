@@ -14,11 +14,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * 自动播放工具类
- *
- * @author ChengTao <a href="mailto:tao@paradisehell.org">Contact me.</a>
- */
 
 @SuppressWarnings("unchecked")
 public class AutoPlayUtils {

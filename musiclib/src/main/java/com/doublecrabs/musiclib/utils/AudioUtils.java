@@ -19,39 +19,23 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/*
- * 音频工具类
- *
- * @author ChengTao <a href="mailto:tao@paradisehell.org">Contact me.</a>
- */
 
 public class AudioUtils implements LoadAudioMessage {
-  //线程池,用于加载和播放音频
   private ExecutorService service = Executors.newCachedThreadPool();
-  //最大音频数目
   private final static int MAX_STREAM = 11;
   private static AudioUtils instance = null;
-  //消息ID
   private final static int LOAD_START = 1;
   private final static int LOAD_FINISH = 2;
   private final static int LOAD_ERROR = 3;
   private final static int LOAD_PROGRESS = 4;
-  //发送进度的间隙时间
   private final static int SEND_PROGRESS_MESSAGE_BREAK_TIME = 500;
-  //音频池，用于播放音频
   private SoundPool pool;
-  //上下文
   private Context context;
-  //加载音频接口
   private OnLoadAudioListener loadAudioListener;
-  //存放黑键和白键的音频加载后的ID的集合
   private SparseIntArray whiteKeyMusics = new SparseIntArray();
   private SparseIntArray blackKeyMusics = new SparseIntArray();
-  //是否加载成功
   private boolean isLoadFinish = false;
-  //是否正在加载
   private boolean isLoading = false;
-  //用于处理进度消息
   private Handler handler;
   private AudioManager audioManager;
   private long currentTime;
@@ -76,7 +60,6 @@ public class AudioUtils implements LoadAudioMessage {
     audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
   }
 
-  //单例模式，只返回一个工具实例
   public static AudioUtils getInstance(Context context, OnLoadAudioListener listener) {
     return getInstance(context, listener, MAX_STREAM);
   }
@@ -93,12 +76,6 @@ public class AudioUtils implements LoadAudioMessage {
     return instance;
   }
 
-  /**
-   * 加载音乐
-   *
-   * @param piano 钢琴实体
-   * @throws Exception 异常
-   */
   public void loadMusic(final Piano piano) throws Exception {
     if (pool == null) {
       throw new Exception("请初始化SoundPool");
@@ -112,7 +89,6 @@ public class AudioUtils implements LoadAudioMessage {
             isLoadFinish = true;
             sendProgressMessage(100);
             sendFinishMessage();
-            //静音播放一个音频,防止延时
             pool.play(whiteKeyMusics.get(0), 0, 0, 1, -1, 2f);
           } else {
             if (System.currentTimeMillis() - currentTime >= SEND_PROGRESS_MESSAGE_BREAK_TIME) {
@@ -164,11 +140,6 @@ public class AudioUtils implements LoadAudioMessage {
     }
   }
 
-  /**
-   * 播放音乐
-   *
-   * @param key 钢琴键
-   */
   public void playMusic(final PianoKey key) {
     if (key != null) {
       if (isLoadFinish) {
@@ -183,12 +154,6 @@ public class AudioUtils implements LoadAudioMessage {
     }
   }
 
-  /**
-   * 播放白键音乐
-   *
-   * @param group 组数，从0开始
-   * @param positionOfGroup 组内位置
-   */
   private void playWhiteKeyMusic(int group, int positionOfGroup) {
     int position;
     if (group == 0) {
@@ -199,12 +164,6 @@ public class AudioUtils implements LoadAudioMessage {
     play(whiteKeyMusics.get(position));
   }
 
-  /**
-   * 播放黑键音乐
-   *
-   * @param group 组数，从0开始
-   * @param positionOfGroup 组内位置
-   */
   private void playBlackKeyMusic(int group, int positionOfGroup) {
     int position;
     if (group == 0) {
@@ -228,9 +187,6 @@ public class AudioUtils implements LoadAudioMessage {
     pool.play(soundId, volume, volume, 1, 0, 1f);
   }
 
-  /**
-   * 结束
-   */
   public void stop() {
     context = null;
     pool.release();
@@ -261,9 +217,6 @@ public class AudioUtils implements LoadAudioMessage {
     handler.sendMessage(Message.obtain(handler, LOAD_PROGRESS, progress));
   }
 
-  /**
-   * 自定义handler,处理加载状态
-   */
   private class AudioStatusHandler extends Handler {
     AudioStatusHandler(Looper looper) {
       super(looper);

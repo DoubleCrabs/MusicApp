@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GameOneActivity"/>
+        <activity android:name=".GameTestActivity"/>
         <activity android:name=".PianoActivity"/>
         <activity android:name=".PreGameStoryActivity" />
         <activity android:name=".SelectDifficultyActivity" />

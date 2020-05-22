@@ -15,11 +15,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-/*
- * 钢琴转换工具类
- *
- * @author ChengTao <a href="mailto:tao@paradisehell.org">Contact me.</a>
- */
 
 public class PianoConvertUtils {
   private static final int STANDARD_DO_GROUP = 3;
@@ -148,8 +143,8 @@ public class PianoConvertUtils {
       boolean nameStart = false;
       boolean nameEnd = false;
       for (char c : configString.toCharArray()) {
-        if (!nameStart || nameEnd) {//读取名称没有开始或者已经结束
-          if (!Character.isWhitespace(c)) {//去掉所有空白符
+        if (!nameStart || nameEnd) {
+          if (!Character.isWhitespace(c)) {
             stringBuilder.append(c);
           }
         } else {
@@ -191,7 +186,7 @@ public class PianoConvertUtils {
         break;
       }
     }
-    // 基本配置
+
     String baseConfigString = baseConfigBuilder.substring(1, baseConfigBuilder.length() - 1);
     for (String baseConfig : baseConfigString.split(";")) {
       if (!baseConfig.equals("")) {
@@ -234,7 +229,7 @@ public class PianoConvertUtils {
     result[1] = configString;
     Log.e("TAG", "convert(PianoConvertUtils.java:" + Thread.currentThread()
         .getStackTrace()[2].getLineNumber() + ")" + "configString:" + configString);
-    // 音符配置
+
     String musicConfigString = configString.substring(musicNoteConfigStartIndex);
     HashSet<Integer> highSet = new HashSet<>();
     HashSet<Integer> lowSet = new HashSet<>();
@@ -278,19 +273,6 @@ public class PianoConvertUtils {
     return result;
   }
 
-  /**
-   * 添加有高音或者低音的钢琴键
-   *
-   * @param currentDoGroup 当前do所在的组数
-   * @param currentDoPosition 当前do所在组数下的位置
-   * @param currentFrequency 当前的默认频率
-   * @param highSet 高音集合
-   * @param lowSet 低音集合
-   * @param pianoKeyList 钢琴键列表
-   * @param musicNote 当前的数字
-   * @param highTune 是否高八度
-   * @param lowTune 是否低八度
-   */
   private static void addHighLowNumberKey(int currentDoGroup, int currentDoPosition,
                                           long currentFrequency, HashSet<Integer> highSet, HashSet<Integer> lowSet,
                                           List<PianoKey> pianoKeyList, String musicNote, boolean highTune, boolean lowTune) {
@@ -316,26 +298,13 @@ public class PianoConvertUtils {
         musicNote.substring(1), highTune, lowTune);
   }
 
-  /**
-   * 添加只有数字(数字 + 频率)的钢琴键
-   *
-   * @param currentDoGroup 当前do所在的组数
-   * @param currentDoPosition 当前do所在组数下的位置
-   * @param currentFrequency 当前的默认频率
-   * @param highSet 高音集合
-   * @param lowSet 低音集合
-   * @param pianoKeyList 钢琴键列表
-   * @param highTune 是否高八度
-   * @param lowTune 是否低八度
-   * @param musicNote 当前的数字
-   */
   private static void addNumberKey(int currentDoGroup, int currentDoPosition, long currentFrequency,
                                    HashSet<Integer> highSet, HashSet<Integer> lowSet, List<PianoKey> pianoKeyList,
                                    String musicNote, boolean highTune, boolean lowTune) {
-    if (musicNote.length() == 1) {// 只有数字
+    if (musicNote.length() == 1) {
       pianoKeyList.add(obtainPianoKey(currentDoGroup, currentDoPosition, currentFrequency,
           Integer.valueOf(musicNote), highSet, lowSet, highTune, lowTune));
-    } else {// 添加了频率
+    } else {
       int number = Integer.valueOf(musicNote.charAt(0) + "");
       Float times = Float.valueOf(musicNote.substring(2));
       pianoKeyList.add(
@@ -344,19 +313,6 @@ public class PianoConvertUtils {
     }
   }
 
-  /**
-   * 获取钢琴键实体
-   *
-   * @param currentDoGroup 当前do所在的组数
-   * @param currentDoPosition 当前do所在组数的位置
-   * @param frequency 该音符的频率
-   * @param musicNoteNumber 该音符对应简谱的数组
-   * @param highSet 改小节高音集合
-   * @param lowSet 该小节的低音集合
-   * @param highTune 是否高八度
-   * @param lowTune 是否低八度
-   * @return 钢琴键实体
-   */
   private static PianoKey obtainPianoKey(int currentDoGroup, int currentDoPosition, long frequency,
                                          int musicNoteNumber, HashSet<Integer> highSet, HashSet<Integer> lowSet, Boolean highTune,
                                          Boolean lowTune) {
@@ -376,7 +332,7 @@ public class PianoConvertUtils {
         group--;
       }
       if (highSet.contains(musicNoteNumber)) {
-        if (!HIGH_BLACK.contains(musicNoteNumber)) {// 还是白建
+        if (!HIGH_BLACK.contains(musicNoteNumber)) {
           position++;
           if (position > 6) {
             group++;
@@ -390,7 +346,7 @@ public class PianoConvertUtils {
           key.setType(PianoKey.BLACK_KEY);
         }
       } else if (lowSet.contains(musicNoteNumber)) {
-        if (!LOW_BLACK.contains(musicNoteNumber)) {// 还是白建
+        if (!LOW_BLACK.contains(musicNoteNumber)) {
           position--;
           if (position < 0) {
             group--;
@@ -401,7 +357,7 @@ public class PianoConvertUtils {
             }
           }
           key.setType(PianoKey.WHITE_KEY);
-        } else {// 黑键
+        } else {
           if (position <= 2) {
             position--;
           } else {

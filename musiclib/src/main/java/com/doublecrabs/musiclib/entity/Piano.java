@@ -15,46 +15,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Piano {
-  //<editor-fold desc="常量">
-  // 钢琴键数目
   public static final int PIANO_COUNT = 25;
-  //</editor-fold>
-
-  //<editor-fold desc="属性">
-  // 钢琴是否初始化过
   private volatile boolean mHasInit;
-  // 黑键集合, 黑键有 8 组
   private List<PianoKey[]> mBlackPianoKeys = new ArrayList<>(8);
-  // 白键集合, 白键有 9 组
   private List<PianoKey[]> mWhitePianoKeys = new ArrayList<>(9);
-  // 黑键宽度
   private int mBlackKeyWidth;
-  // 黑键宽度的一半，用于计算黑键的区域
   private int mHalfBlackKeyWhite;
-  // 黑键高度
   private int mBlackKeyHeight;
-  // 白键宽度
   private int mWhiteKeyWidth;
-  // 白键高度
   private int mWhiteKeyHeight;
-  // 钢琴总宽度
   private int mPianoWith = 100;
-  // 钢琴图标缩放比例
   private float mScale;
-  // 上下文
   @NonNull
   private Context mContext;
-  // 钢琴黑键图标
   @DrawableRes
   private int mPianoBlackKeyResourceId;
-  // 钢琴白键图标
   @DrawableRes
   private int mPianoWhiteKeyResourceId;
-  // 最大的钢琴白键高度
   private int mMaxPianoWhiteKeyHeight;
-  //</editor-fold>
-
-  //<editor-fold desc="构造函数">
 
   public Piano(
       @NonNull Context context,
@@ -64,9 +42,7 @@ public final class Piano {
     mPianoBlackKeyResourceId = pianoBlackKeyResourceId;
     mPianoWhiteKeyResourceId = pianoWhiteKeyResourceId;
   }
-  //</editor-fold>
 
-  //<editor-fold desc="Getter">
   public List<PianoKey[]> getWhitePianoKeys() {
     return mWhitePianoKeys;
   }
@@ -78,15 +54,8 @@ public final class Piano {
   public int getPianoWith() {
     return mPianoWith;
   }
-  //</editor-fold>
 
-  //<editor-fold desc="公开方法">
 
-  /**
-   * 初始化钢琴实体
-   *
-   * @param maxPianoWhiteKeyHeight 最大的钢琴白键高度
-   */
   public void initPiano(int maxPianoWhiteKeyHeight) {
     if (validateInit(maxPianoWhiteKeyHeight)) {
       return;
@@ -95,21 +64,11 @@ public final class Piano {
     mHasInit = true;
   }
 
-  /**
-   * 是否已经初始化
-   */
+
   public boolean hasInit() {
     return mHasInit;
   }
-  //</editor-fold>
 
-  //<editor-fold desc="私有方法">
-
-  /**
-   * 检查初始化
-   *
-   * @return true : 已经初始化
-   */
   @SuppressWarnings("ConstantConditions")
   private boolean validateInit(int maxPianoWhiteKeyHeight) {
     if (maxPianoWhiteKeyHeight <= 0) {
@@ -131,12 +90,8 @@ public final class Piano {
     return false;
   }
 
-  /**
-   * 初始化钢琴
-   */
   @SuppressWarnings("ConstantConditions")
   private void initPiano() {
-    // 清空数据
     mBlackPianoKeys.clear();
     mWhitePianoKeys.clear();
     mPianoWith = 0;
@@ -184,7 +139,6 @@ public final class Piano {
       }
       mBlackPianoKeys.add(keys);
     }
-    // 初始化白键
     for (int i = 3; i < 7; i++) {
       PianoKey[] mKeys = new PianoKey[i == 0 ? 2 : i == 6 ? 1 : 7];
       for (int j = 0; j < mKeys.length; j++) {
@@ -245,13 +199,6 @@ public final class Piano {
     }
   }
 
-  /**
-   * 设置黑色键图案的位置
-   *
-   * @param group 组数, 从 0 开始
-   * @param positionOfGroup 组内的位置
-   * @param drawable 要设置的 Drawable 对象
-   */
   private void setBlackKeyDrawableBounds(
       @IntRange(from = 0) int group,
       @IntRange(from = 0) int positionOfGroup,
@@ -275,14 +222,6 @@ public final class Piano {
     Log.w("TAG", "white key bounds : " + drawable.getBounds());
   }
 
-  /**
-   * 设置白色键的点击区域
-   *
-   * @param group 组数，从0开始
-   * @param positionOfGroup 本组数内的位置
-   * @param blackKeyPosition 黑键占白键的位置
-   * @return 矩形数组
-   */
   private Rect[] getWhitePianoKeyArea(
       @IntRange(from = 0) int group,
       @IntRange(from = 0) int positionOfGroup,
@@ -355,13 +294,6 @@ public final class Piano {
     }
   }
 
-  /**
-   * 设置白色键图案的位置
-   *
-   * @param group 组数，从0开始
-   * @param positionOfGroup 在本组中的位置
-   * @param drawable 要设置的 Drawable 对象
-   */
   private void setWhiteKeyDrawableBounds(int group, int positionOfGroup, Drawable drawable) {
     int offset = 0;
     if (group == 0) {
@@ -371,14 +303,7 @@ public final class Piano {
         (7 * (group - 3) - 4 + offset + positionOfGroup) * mWhiteKeyWidth, mWhiteKeyHeight);
   }
 
-  /**
-   * 从资源文件中获取声音 id
-   *
-   * @param voiceName 声音的文件名
-   * @return 声音 id
-   */
   private int getVoiceFromResources(String voiceName) {
     return mContext.getResources().getIdentifier(voiceName, "raw", mContext.getPackageName());
   }
-  //</editor-fold>
 }

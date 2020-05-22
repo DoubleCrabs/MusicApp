@@ -31,65 +31,42 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static android.content.ContentValues.TAG;
 
-/*
- * 钢琴自定义视图
- *
- * @author ChengTao <a href="mailto:tao@paradisehell.org">Contact me.</a>
- */
 
 public final class PianoView extends View {
-  // 定义钢琴键
   @NonNull
   private Piano mPiano;
-  // 被点击过的钢琴键
   private CopyOnWriteArrayList<PianoKey> pressedKeys = new CopyOnWriteArrayList<>();
-  // 画笔
   private Paint paint;
-  // 定义标识音名的正方形
   private RectF square;
-  // 正方形背景颜色
   private String[] pianoColors = {
       "#FF8C00", "#FFFF00", "#00FA9A", "#00CED1", "#4169E1", "#FFB6C1",
       "#FFEBCD"
   };
-  //播放器工具
   private AudioUtils utils = null;
-  //上下文
   private Context context;
-  //布局的宽度
   private int layoutWidth = 0;
-  //音频加载接口
   private OnLoadAudioListener loadAudioListener;
-  //自动播放接口
   private OnPianoAutoPlayListener autoPlayListener;
-  //接口
   private OnPianoListener pianoListener;
-  //钢琴被滑动的一些属性
   private int progress = 0;
-  //设置是否可以点击
   private boolean canPress = true;
-  //是否正在自动播放
   private boolean isAutoPlaying = false;
-  //初始化结束
   private int minRange = 0;
   private int maxRange = 0;
   //
   private int maxStream;
-  //自动播放Handler
   private Handler autoPlayHandler = new Handler(Looper.myLooper()) {
     @Override
     public void handleMessage(Message msg) {
       handleAutoPlay(msg);
     }
   };
-  //消息ID
   private static final int HANDLE_AUTO_PLAY_START = 0;
   private static final int HANDLE_AUTO_PLAY_END = 1;
   private static final int HANDLE_AUTO_PLAY_BLACK_DOWN = 2;
   private static final int HANDLE_AUTO_PLAY_WHITE_DOWN = 3;
   private static final int HANDLE_AUTO_PLAY_KEY_UP = 4;
 
-  //<editor-fold desc="构造函数">
 
   public PianoView(Context context) {
     this(context, null);
@@ -104,13 +81,10 @@ public final class PianoView extends View {
     this.context = context;
     paint = new Paint();
     paint.setAntiAlias(true);
-    //初始化画笔
     paint.setStyle(Paint.Style.FILL);
-    //初始化正方形
     square = new RectF();
     mPiano = new Piano(getContext(), R.drawable.black_piano_key, R.drawable.white_piano_key);
   }
-  //</editor-fold>
 
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -144,13 +118,11 @@ public final class PianoView extends View {
       }
     }
     if (mPiano.hasInit()) {
-      //初始化白键
       List<PianoKey[]> whitePianoKeys = mPiano.getWhitePianoKeys();
       for (int i = 0; i < whitePianoKeys.size(); i++) {
         for (PianoKey key : whitePianoKeys.get(i)) {
           paint.setColor(Color.parseColor(pianoColors[i]));
           key.getKeyDrawable().draw(canvas);
-          //初始化音名区域
           Rect r = key.getKeyDrawable().getBounds();
           int sideLength = (r.right - r.left) / 2;
           int left = r.left + sideLength / 2;
@@ -168,7 +140,6 @@ public final class PianoView extends View {
           canvas.drawText(key.getLetterName(), square.centerX(), baseline, paint);
         }
       }
-      // 初始化黑键
       List<PianoKey[]> blackPianoKeys = mPiano.getBlackPianoKeys();
       for (int i = 0; i < blackPianoKeys.size(); i++) {
         for (PianoKey key : blackPianoKeys.get(i)) {
@@ -186,11 +157,10 @@ public final class PianoView extends View {
   public boolean onTouchEvent(MotionEvent event) {
     if (canPress) {
       switch (event.getAction()) {
-        //当第一个手指点击按键的时候
         case MotionEvent.ACTION_DOWN:
+        case MotionEvent.ACTION_POINTER_DOWN:
           handleDown(event.getActionIndex(), event);
           break;
-        //当手指在键盘上滑动的时候
         case MotionEvent.ACTION_MOVE:
           for (int i = 0; i < event.getPointerCount(); i++) {
             handleMove(i, event);
@@ -199,15 +169,9 @@ public final class PianoView extends View {
             handleDown(i, event);
           }
           break;
-        //多点触控，当其他手指点击键盘的手
-        case MotionEvent.ACTION_POINTER_DOWN:
-          handleDown(event.getActionIndex(), event);
-          break;
-        //多点触控，当其他手指抬起的时候
         case MotionEvent.ACTION_POINTER_UP:
           handlePointerUp(event.getPointerId(event.getActionIndex()));
           break;
-        //但最后一个手指抬起的时候
         case MotionEvent.ACTION_UP:
           handleUp();
           this.performClick();
@@ -221,16 +185,9 @@ public final class PianoView extends View {
     }
   }
 
-  /**
-   * 处理按下事件
-   *
-   * @param which 那个触摸点
-   * @param event 事件对象
-   */
   private void handleDown(int which, MotionEvent event) {
     int x = (int) event.getX(which) + this.getScrollX();
     int y = (int) event.getY(which);
-    // 检查白键
     List<PianoKey[]> whitePianoKeys = mPiano.getWhitePianoKeys();
     for (int i = 0; i < whitePianoKeys.size(); i++) {
       for (PianoKey key : whitePianoKeys.get(i)) {
@@ -239,7 +196,6 @@ public final class PianoView extends View {
         }
       }
     }
-    // 检查黑键
     List<PianoKey[]> blackPianoKeys = mPiano.getBlackPianoKeys();
     for (int i = 0; i < blackPianoKeys.size(); i++) {
       for (PianoKey key : blackPianoKeys.get(i)) {
@@ -250,13 +206,6 @@ public final class PianoView extends View {
     }
   }
 
-  /**
-   * 处理白键点击
-   *
-   * @param which 那个触摸点
-   * @param event 事件
-   * @param key 钢琴按键
-   */
   private void handleWhiteKeyDown(int which, MotionEvent event, PianoKey key) {
     key.getKeyDrawable().setState(new int[] { android.R.attr.state_pressed });
     key.setIsPressed(true);
@@ -278,13 +227,6 @@ public final class PianoView extends View {
     }
   }
 
-  /**
-   * 处理黑键点击
-   *
-   * @param which 那个触摸点
-   * @param event 事件
-   * @param key 钢琴按键
-   */
   private void handleBlackKeyDown(int which, MotionEvent event, PianoKey key) {
     key.getKeyDrawable().setState(new int[] { android.R.attr.state_pressed });
     key.setIsPressed(true);
@@ -306,12 +248,6 @@ public final class PianoView extends View {
     }
   }
 
-  /**
-   * 处理滑动
-   *
-   * @param which 触摸点下标
-   * @param event 事件对象
-   */
   private void handleMove(int which, MotionEvent event) {
     int x = (int) event.getX(which) + this.getScrollX();
     int y = (int) event.getY(which);
@@ -328,11 +264,6 @@ public final class PianoView extends View {
     }
   }
 
-  /**
-   * 处理多点触控时，手指抬起事件
-   *
-   * @param pointerId 触摸点ID
-   */
   private void handlePointerUp(int pointerId) {
     for (PianoKey key : pressedKeys) {
       if (key.getFingerId() == pointerId) {
@@ -346,9 +277,6 @@ public final class PianoView extends View {
     }
   }
 
-  /**
-   * 处理最后一个手指抬起事件
-   */
   private void handleUp() {
     if (pressedKeys.size() > 0) {
       for (PianoKey key : pressedKeys) {
@@ -360,13 +288,6 @@ public final class PianoView extends View {
     }
   }
 
-  //-----公共方法
-
-  /**
-   * 自动播放
-   *
-   * @param autoPlayEntities 自动播放实体列表
-   */
   public void autoPlay(final List<AutoPlayEntity> autoPlayEntities) {
     if (isAutoPlaying) {
       return;
@@ -376,11 +297,9 @@ public final class PianoView extends View {
     new Thread() {
       @Override
       public void run() {
-        //开始
         if (autoPlayHandler != null) {
           autoPlayHandler.sendEmptyMessage(HANDLE_AUTO_PLAY_START);
         }
-        //播放
         try {
           if (autoPlayEntities != null) {
             for (AutoPlayEntity entity : autoPlayEntities) {
@@ -437,7 +356,6 @@ public final class PianoView extends View {
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
-        //结束
         if (autoPlayHandler != null) {
           autoPlayHandler.sendEmptyMessage(HANDLE_AUTO_PLAY_END);
         }
@@ -445,147 +363,81 @@ public final class PianoView extends View {
     }.start();
   }
 
-  /**
-   * 释放自动播放
-   */
   public void releaseAutoPlay() {
     if (utils != null) {
       utils.stop();
     }
   }
 
-  /**
-   * 获取钢琴控件的总长度
-   *
-   * @return 钢琴控件的总长度
-   */
   public int getPianoWidth() {
     return mPiano.getPianoWith();
   }
 
-  /**
-   * 获取钢琴布局的实际宽度
-   *
-   * @return 钢琴布局的实际宽度
-   */
   public int getLayoutWidth() {
     return layoutWidth;
   }
 
-  /**
-   * 设置显示音名的矩形的颜色<br>
-   * <b>注:一共9中颜色</b>
-   *
-   * @param pianoColors 颜色数组，长度为9
-   */
   public void setPianoColors(String[] pianoColors) {
     if (pianoColors.length == 9) {
       this.pianoColors = pianoColors;
     }
   }
 
-  /**
-   * 设置是否可点击
-   *
-   * @param canPress 是否可点击
-   */
   public void setCanPress(boolean canPress) {
     this.canPress = canPress;
   }
 
-  /**
-   * 移动
-   *
-   * @param progress 移动百分比
-   */
   public void scroll(int progress) {
 
   }
 
-  /**
-   * 设置soundPool maxStream
-   *
-   * @param maxStream maxStream
-   */
   public void setSoundPollMaxStream(int maxStream) {
     this.maxStream = maxStream;
   }
 
-  //接口
-
-  /**
-   * 初始化钢琴相关界面
-   *
-   * @param pianoListener 钢琴接口
-   */
   public void setPianoListener(OnPianoListener pianoListener) {
     this.pianoListener = pianoListener;
   }
 
-  /**
-   * 设置加载音频接口
-   *
-   * @param loadAudioListener 　音频接口
-   */
   public void setLoadAudioListener(OnLoadAudioListener loadAudioListener) {
     this.loadAudioListener = loadAudioListener;
   }
 
-  /**
-   * 设置自动播放接口
-   *
-   * @param autoPlayListener 　自动播放接口
-   */
   public void setAutoPlayListener(OnPianoAutoPlayListener autoPlayListener) {
     this.autoPlayListener = autoPlayListener;
   }
 
-  //-----私有方法
-
-  /**
-   * 将dp装换成px
-   *
-   * @param dp dp值
-   * @return px值
-   */
-
-
-  /**
-   * 处理自动播放
-   *
-   * @param msg 消息实体
-   */
   private void handleAutoPlay(Message msg) {
     switch (msg.what) {
-      case HANDLE_AUTO_PLAY_BLACK_DOWN://播放黑键
+      case HANDLE_AUTO_PLAY_BLACK_DOWN:
         if (msg.obj != null) {
           try {
             PianoKey key = (PianoKey) msg.obj;
             handleBlackKeyDown(-1, null, key);
           } catch (Exception e) {
-            Log.e("TAG", "黑键对象有问题:" + e.getMessage());
+            Log.e("TAG", "Добавить сообщение:" + e.getMessage());
           }
         }
         break;
-      case HANDLE_AUTO_PLAY_WHITE_DOWN://播放白键
+      case HANDLE_AUTO_PLAY_WHITE_DOWN:
         if (msg.obj != null) {
           try {
             PianoKey key = (PianoKey) msg.obj;
             handleWhiteKeyDown(-1, null, key);
           } catch (Exception e) {
-            Log.e("TAG", "白键对象有问题:" + e.getMessage());
+            Log.e("TAG", "Добавить сообщение:" + e.getMessage());
           }
         }
         break;
       case HANDLE_AUTO_PLAY_KEY_UP:
         handleUp();
         break;
-      case HANDLE_AUTO_PLAY_START://开始
+      case HANDLE_AUTO_PLAY_START:
         if (autoPlayListener != null) {
           autoPlayListener.onPianoAutoPlayStart();
         }
         break;
-      case HANDLE_AUTO_PLAY_END://结束
+      case HANDLE_AUTO_PLAY_END:
         isAutoPlaying = false;
         setCanPress(true);
         if (autoPlayListener != null) {

@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GameOneActivity extends AppCompatActivity {
+public class GameTestActivity extends AppCompatActivity {
 
     String answer;
     int result = 0;

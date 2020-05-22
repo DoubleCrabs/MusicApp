@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="80"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:typeface="serif" />
 
     <LinearLayout
@@ -19,7 +19,7 @@
         android:layout_weight="15"
         android:gravity="center|bottom"
         android:orientation="vertical"
-        android:paddingBottom="40dp">
+        android:paddingBottom="40sp">
 
         <Button
             android:id="@+id/buttonContinueGame"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
             android:background="@drawable/buttonshape"
-            android:text="К ЗАДАНИЮ" />
+            android:text="@string/to_task" />
 
 
     </LinearLayout>

@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void continueGame(){
-
+    public void continueGame(View view) {
     }
 }

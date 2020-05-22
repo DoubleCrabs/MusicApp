@@ -2,5 +2,12 @@
     <string name="app_name">МП: Найти Пинни</string>
     <string name="textGame1">Это пробный текст, который должен описывать происходящее</string>
     <string name="textGame2">Это пробный текст, который должен описывать происходящее</string>
+    <string name="app_name_first">Музыкальное приключение:</string>
+    <string name="app_name_second">Найти Пинни</string>
+    <string name="new_game">НОВАЯ ИГРА</string>
+    <string name="to_task">К ЗАДАНИЮ</string>
+    <string name="normal">Нормальный</string>
+    <string name="hard">Сложный</string>
+    <string name="accept">ОК</string>
 
 </resources>

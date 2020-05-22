@@ -18,18 +18,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:gravity="center|bottom"
-            android:text="Нормальный" />
+            android:text="@string/normal" />
 
         <RadioButton
             android:layout_marginTop="20dp"
             android:id="@+id/radioButtonHard"
             android:layout_width="wrap_content"
             android:gravity="center|bottom"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:layout_height="wrap_content"
-            android:text="Сложный      " />
+            android:text="@string/hard" />
     </RadioGroup>
 
     <LinearLayout
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
             android:background="@drawable/buttonshape"
-            android:text="ОК" />
+            android:text="@string/accept" />
 
 
     </LinearLayout>

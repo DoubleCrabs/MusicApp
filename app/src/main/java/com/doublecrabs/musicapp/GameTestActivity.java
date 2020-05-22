@@ -6,6 +6,7 @@ import java.util.Random;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -124,5 +125,8 @@ public class GameTestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+    }
+//TODO incorrect signature in method above
+    public void checkAnswer(View view) {
     }
 }

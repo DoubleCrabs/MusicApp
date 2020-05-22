@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="40"
         android:gravity="center|bottom"
-        android:text="Музыкальное приключение:"
+        android:text="@string/app_name_first"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:typeface="serif" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_gravity="center"
         android:layout_weight="5"
         android:gravity="center"
-        android:text="Найти Пинни"
+        android:text="@string/app_name_second"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:typeface="monospace" />
 
@@ -42,7 +42,7 @@
             android:layout_gravity="center_horizontal|center"
             android:layout_marginBottom="10dp"
             android:background="@drawable/buttonshape"
-            android:text="НОВАЯ ИГРА" />
+            android:text="@string/new_game" />
 
         <Button
             android:id="@+id/buttonContinueGame"

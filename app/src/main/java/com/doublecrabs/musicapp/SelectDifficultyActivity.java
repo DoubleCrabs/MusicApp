@@ -2,6 +2,7 @@ package com.doublecrabs.musicapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -14,15 +15,17 @@ public class SelectDifficultyActivity extends AppCompatActivity {
     final String CURRENT_GAME = "current_game";
     final String CURRENT_LVL = "current_lvl";
     final String DIFFICULTY = "difficulty";
+    final String RATING = "rating";
 
     int difficulty = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_difficulty);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         setTitle("Уровень сложности");
 
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
         radioGroup.clearCheck();
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -45,7 +48,8 @@ public class SelectDifficultyActivity extends AppCompatActivity {
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString(CURRENT_GAME, "1");
         ed.putString(CURRENT_LVL, "1");
-        ed.commit();
+        ed.putInt(RATING, 0);
+        ed.apply();
         if(difficulty == 0) {
             Toast.makeText(this, "Выберете уровень сложности игры", Toast.LENGTH_SHORT).show();
             return;

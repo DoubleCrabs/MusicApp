@@ -8,17 +8,17 @@
         android:id="@+id/question"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_weight="3"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:typeface="serif" />
 
     <RadioGroup
-        android:id="@+id/radioGroup2"
+        android:id="@+id/radioGroupGameOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="30"
+        android:layout_weight="2"
         android:gravity="center_vertical"
         android:layout_marginTop="24dp">
 
@@ -27,26 +27,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/activity_text_size_test"
-            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/normal" />
+            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin" />
 
         <RadioButton
             android:id="@+id/answer2"
             android:layout_width="wrap_content"
             android:gravity="center"
             android:textSize="@dimen/activity_text_size_test"
-            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_height="wrap_content"
-            android:text="@string/hard" />
+            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content" />
 
         <RadioButton
             android:id="@+id/answer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"            android:textSize="@dimen/activity_text_size_test"
+            android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"
+            android:textSize="@dimen/activity_text_size_test"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:gravity="center"
-            android:text="@string/normal" />
+            android:gravity="center" />
 
         <RadioButton
             android:id="@+id/answer4"
@@ -55,29 +55,28 @@
             android:textSize="@dimen/activity_text_size_test"
             android:layout_marginHorizontal="@dimen/activity_test_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:gravity="center"
-            android:text="@string/normal" />
+            android:gravity="center" />
     </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="15"
+        android:layout_weight="3"
         android:gravity="center|bottom"
         android:orientation="vertical"
-        android:paddingBottom="40dp">
+        android:paddingBottom="40dp"
+        android:minHeight="40dp">
 
         <Button
             android:id="@+id/buttonSubmit"
             style="?android:attr/buttonStyleSmall"
-            android:onClick="checkAnswer"
             android:layout_width="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_height="42dp"
-            android:layout_gravity="center_horizontal|center"
+            android:layout_gravity="center"
             android:background="@drawable/buttonshape"
-            android:text="@string/accept" />
+            android:text="@string/reply" />
 
 
     </LinearLayout>

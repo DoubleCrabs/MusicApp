@@ -9,5 +9,7 @@
     <string name="normal">Нормальный</string>
     <string name="hard">Сложный</string>
     <string name="accept">ОК</string>
+    <string name="reply">Ответить</string>
+    <string name="continue_game">ПРОДОЛЖИТЬ</string>
 
 </resources>

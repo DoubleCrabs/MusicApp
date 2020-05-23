@@ -3,8 +3,11 @@ package com.doublecrabs.musicapp;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,19 +27,23 @@ import java.io.InputStream;
 
 public class GameTestActivity extends AppCompatActivity {
 
+    SharedPreferences sPref;
+    final String RATING = "rating";
+
     String answer;
-    int result = 0;
-    int rating = 0;
+    int localRating = 0;
     int lvl = 0;
+    int maxLvl = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_test);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         setTitle("Мини-игра: Тест");
 
         answer = showQustion();
-        Button mButton = (Button)findViewById(R.id.buttonSubmit);
+        Button mButton = findViewById(R.id.buttonSubmit);
         mButton.setOnClickListener(v -> checkAnswer(answer));
     }
 
@@ -88,7 +95,7 @@ public class GameTestActivity extends AppCompatActivity {
     }
 
     public String loadTest() {
-        String json = null;
+        String json;
         try {
             InputStream is = this.getAssets().open("listOfTests.json");
             int size = is.available();
@@ -104,29 +111,28 @@ public class GameTestActivity extends AppCompatActivity {
     }
 
     public void checkAnswer(String answer){
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup2);
-        radioGroup.clearCheck();
-
+        RadioGroup radioGroup = findViewById(R.id.radioGroupGameOne);
         int selectedId = radioGroup.getCheckedRadioButtonId();
 
-        RadioButton radioButton = (RadioButton) findViewById(selectedId);
-
         if(selectedId == -1) {
-            Toast.makeText(this, "Выберете один вариант ответа", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Выберете вариант ответа", Toast.LENGTH_SHORT).show();
+            return;
         }else{
-            if(radioButton.getText() == answer)
-                rating += 1;
-            lvl++;
-            if(lvl < 3){
-                answer = showQustion();
-            }else{
-                Intent intent = new Intent(this, PianoActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+            RadioButton radioButton = findViewById(selectedId);
+            if(radioButton.getText() == answer) {
+                localRating = localRating + 1;
             }
         }
-    }
-//TODO incorrect signature in method above
-    public void checkAnswer(View view) {
+        lvl++;
+        radioGroup.clearCheck();
+        if(lvl < maxLvl) {
+            answer = showQustion();
+        }else{
+            sPref = getSharedPreferences("SaveData", MODE_PRIVATE);
+            SharedPreferences.Editor ed = sPref.edit();
+            ed.putInt(RATING, sPref.getInt(RATING, 0) + localRating);
+            ed.apply();
+        }
+
     }
 }

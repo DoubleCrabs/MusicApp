@@ -2,6 +2,7 @@ package com.doublecrabs.musicapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -18,6 +19,7 @@ public class PreGameStoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_game_story);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         sPref = getSharedPreferences("SaveData", MODE_PRIVATE);
         String mCurrentGame = sPref.getString(CURRENT_GAME, "");

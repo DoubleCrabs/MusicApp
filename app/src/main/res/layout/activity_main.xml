@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
             android:background="@drawable/buttonshape"
-            android:text="ПРОДОЛЖИТЬ" />
+            android:text="@string/continue_game" />
 
 
     </LinearLayout>

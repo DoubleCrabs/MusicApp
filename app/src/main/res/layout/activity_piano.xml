@@ -3,7 +3,7 @@
     android:id="@+id/activity_main"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/background"
+    android:background="@drawable/game_background"
     android:orientation="vertical">
 
   <LinearLayout
@@ -23,5 +23,5 @@
   <com.chengtao.pianoview.view.PianoView
       android:id="@+id/pv"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"></com.chengtao.pianoview.view.PianoView>
+      android:layout_height="wrap_content"/>
 </LinearLayout>

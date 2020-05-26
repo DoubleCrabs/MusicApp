@@ -1,10 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/game_background"
     android:orientation="vertical">
 
     <TextView
+        android:paddingTop="32dp"
         android:id="@+id/question"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

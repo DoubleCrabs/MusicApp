@@ -1,5 +1,6 @@
 package com.doublecrabs.musicapp;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -44,7 +45,7 @@ public class GameTestActivity extends AppCompatActivity {
 
         answer = showQustion();
         Button mButton = findViewById(R.id.buttonSubmit);
-        mButton.setOnClickListener(v -> checkAnswer(answer));
+        mButton.setOnClickListener(this::checkAnswer);
     }
 
     public String showQustion() {
@@ -102,7 +103,7 @@ public class GameTestActivity extends AppCompatActivity {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
@@ -110,7 +111,7 @@ public class GameTestActivity extends AppCompatActivity {
         return json;
     }
 
-    public void checkAnswer(String answer){
+    public void checkAnswer(View v){
         RadioGroup radioGroup = findViewById(R.id.radioGroupGameOne);
         int selectedId = radioGroup.getCheckedRadioButtonId();
 
@@ -123,6 +124,7 @@ public class GameTestActivity extends AppCompatActivity {
                 localRating = localRating + 1;
             }
         }
+        Toast.makeText(this, Integer.toString(localRating), Toast.LENGTH_SHORT).show();
         lvl++;
         radioGroup.clearCheck();
         if(lvl < maxLvl) {

@@ -1,8 +1,10 @@
 package com.doublecrabs.musicapp;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -31,6 +33,7 @@ public class GameTestActivity extends AppCompatActivity {
     SharedPreferences sPref;
     final String RATING = "rating";
 
+    ArrayList<Integer> showedQuestions = new ArrayList<>();
     String answer;
     int localRating = 0;
     int lvl = 0;
@@ -43,12 +46,12 @@ public class GameTestActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         setTitle("Мини-игра: Тест");
 
-        answer = showQustion();
+        answer = showQuestion();
         Button mButton = findViewById(R.id.buttonSubmit);
         mButton.setOnClickListener(this::checkAnswer);
     }
 
-    public String showQustion() {
+    public String showQuestion() {
         String jsonFile = loadTest();
 
         JSONObject jsonObject;
@@ -63,6 +66,11 @@ public class GameTestActivity extends AppCompatActivity {
             TextView mAnswer4 = findViewById(R.id.answer4);
 
             int i = new Random().nextInt(jsonArray.length());
+            if(showedQuestions.contains(i)) {
+                answer = showQuestion();
+            }
+            showedQuestions.add(i);
+
             JSONObject jsObject = jsonArray.getJSONObject(i);
 
             String question = jsObject.getString("question");
@@ -127,7 +135,7 @@ public class GameTestActivity extends AppCompatActivity {
         lvl++;
         radioGroup.clearCheck();
         if(lvl < maxLvl) {
-            answer = showQustion();
+            answer = showQuestion();
         }else{
             ContinueGame mContinueGame = new ContinueGame();
             mContinueGame.saveData(view, localRating);

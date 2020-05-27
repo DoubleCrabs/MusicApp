@@ -32,7 +32,7 @@ class ContinueGame {
                 intent.setClass(mContext, GameTestActivity.class);
                 break;
             case "2":
-                intent.setClass(mContext, PianoActivity.class);
+                intent.setClass(mContext, MainActivity.class);
                 break;
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -4,22 +4,29 @@
     android:background="@drawable/game_background"
     android:orientation="vertical">
 
+    <ScrollView
+        android:id="@+id/hscroll"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
     <TextView
         android:paddingTop="32dp"
         android:id="@+id/question"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
+
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="24sp"
         android:typeface="serif" />
+    </ScrollView>
 
     <RadioGroup
         android:id="@+id/radioGroupGameOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:layout_marginTop="24dp">
 
@@ -61,12 +68,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="3"
+        android:layout_height="80dp"
+        android:layout_weight="1"
         android:gravity="center|bottom"
         android:orientation="vertical"
         android:paddingBottom="40dp"
-        android:minHeight="40dp">
+        android:minHeight="80dp">
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -78,7 +85,6 @@
             android:layout_gravity="center"
             android:background="@drawable/buttonshape"
             android:text="@string/reply" />
-
 
     </LinearLayout>
 

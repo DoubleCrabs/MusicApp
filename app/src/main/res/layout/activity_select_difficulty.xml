@@ -43,7 +43,7 @@
         <Button
             android:id="@+id/buttonContinueGame"
             style="?android:attr/buttonStyleSmall"
-            android:onClick="saveDifficulty"
+            android:onClick="onButtonClick"
             android:layout_width="145dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"

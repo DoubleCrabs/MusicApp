@@ -12,6 +12,8 @@ import android.widget.Toast;
 public class SelectDifficultyActivity extends AppCompatActivity {
 
     SharedPreferences sPref;
+    SharedPreferences.Editor ed;
+
     final String CURRENT_GAME = "current_game";
     final String CURRENT_LVL = "current_lvl";
     final String DIFFICULTY = "difficulty";
@@ -20,6 +22,9 @@ public class SelectDifficultyActivity extends AppCompatActivity {
     int difficulty = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sPref = getSharedPreferences("SaveData", MODE_PRIVATE);
+        ed = sPref.edit();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_difficulty);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
@@ -43,24 +48,34 @@ public class SelectDifficultyActivity extends AppCompatActivity {
         });
     }
 
-    public void saveDifficulty(View view) {
-        sPref = getSharedPreferences("SaveData", MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
+    public void onButtonClick(View view) {
         ed.putString(CURRENT_GAME, "1");
         ed.putString(CURRENT_LVL, "1");
         ed.putInt(RATING, 0);
         ed.apply();
-        if(difficulty == 0) {
+
+        if (!saveDifficulty(difficulty)) {
             Toast.makeText(this, "Выберете уровень сложности игры", Toast.LENGTH_SHORT).show();
             return;
-        }else
-        if(difficulty == 1)
-            ed.putString(DIFFICULTY, "normal");
-        else
-            ed.putString(DIFFICULTY, "hard");
-        ed.apply();
+        }
+
         Intent intent = new Intent(SelectDifficultyActivity.this, PreGameStoryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    public boolean saveDifficulty(int difficulty) {
+        switch (difficulty) {
+            case 1:
+                ed.putString(DIFFICULTY, "normal");
+                ed.apply();
+                return true;
+            case 2:
+                ed.putString(DIFFICULTY, "hard");
+                ed.apply();
+                return true;
+            default:
+                return false;
+        }
     }
 }

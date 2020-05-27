@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
     }
 
-    public void newGame(View iew){
+    public void newGame(View view){
         Intent intent = new Intent(MainActivity.this, SelectDifficultyActivity.class);
 
         startActivity(intent);

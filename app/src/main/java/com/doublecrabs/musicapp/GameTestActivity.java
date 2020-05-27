@@ -34,7 +34,7 @@ public class GameTestActivity extends AppCompatActivity {
     String answer;
     int localRating = 0;
     int lvl = 0;
-    int maxLvl = 10;
+    int maxLvl = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +111,7 @@ public class GameTestActivity extends AppCompatActivity {
         return json;
     }
 
-    public void checkAnswer(View v){
+    public void checkAnswer(View view){
         RadioGroup radioGroup = findViewById(R.id.radioGroupGameOne);
         int selectedId = radioGroup.getCheckedRadioButtonId();
 
@@ -124,16 +124,17 @@ public class GameTestActivity extends AppCompatActivity {
                 localRating = localRating + 1;
             }
         }
-        Toast.makeText(this, Integer.toString(localRating), Toast.LENGTH_SHORT).show();
         lvl++;
         radioGroup.clearCheck();
         if(lvl < maxLvl) {
             answer = showQustion();
         }else{
-            sPref = getSharedPreferences("SaveData", MODE_PRIVATE);
-            SharedPreferences.Editor ed = sPref.edit();
-            ed.putInt(RATING, sPref.getInt(RATING, 0) + localRating);
-            ed.apply();
+            ContinueGame mContinueGame = new ContinueGame();
+            mContinueGame.saveData(view, localRating);
+
+            Intent intent = new Intent(this, PassResultActivity.class);
+            intent.putExtra("result", Integer.toHexString(localRating));
+            startActivity(intent);
         }
 
     }
